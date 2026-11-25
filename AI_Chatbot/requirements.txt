@@ -2,14 +2,12 @@
 fastapi
 uvicorn[standard]
 python-dotenv
-pydantic
 faiss-cpu
 sentence-transformers
-numpy
 pypdf
 pdfplumber
 langchain-core
 langchain-community
 langchain-text-splitters
 google-genai
-ollama
+
