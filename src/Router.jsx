@@ -1,0 +1,32 @@
+import React from 'react'
+import Layout from './Layout'
+import { Route, Routes } from 'react-router-dom'
+import MainPages from './MainPages'
+import Project from './Project'
+import Experience from './Experience'
+import Services from './Services'
+import Contact from './Contact'
+import VideoMonitor from './VideoMonitor'
+
+const Router = () => {
+  return (
+        <Routes>
+                  <Route  element={<Layout />} >
+
+                  <Route path="/" element={<MainPages />} />
+                  <Route path="/about" element={<Experience />} />
+                  <Route path="/services" element={<Services />} />
+                <Route path="/portfolio" element={<Project />} />
+                <Route path="/contact" element={<Contact />} />
+
+
+
+                  </Route>
+
+                  <Route path="/video" element={<VideoMonitor interviewId="INTERVIEW_123" />} />
+
+</Routes>
+  )
+}
+
+export default Router
