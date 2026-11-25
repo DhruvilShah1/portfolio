@@ -111,25 +111,7 @@ const projects = [
     github: "",
     live: "",
   },
-  {
-    id: 6,
-    name: "Leave Management System",
-    category: "AI & ML",
-    type: "AI-Powered HR",
-    description:
-      "An intelligent HR assistant that combines company leave policies with authenticated database queries to answer employee questions.",
-    features: [
-      "Employee-specific leave balance",
-      "Leave request information",
-      "HR policy document retrieval",
-      "User-specific database filtering",
-    ],
-    technologies: ["Python", "LangChain", "Ollama", "MongoDB", "RAG"],
-    icon: FileText,
-    accent: "#DB2777",
-    github: "",
-    live: "",
-  },
+
 ];
 
 const filters = ["All", "Full Stack", "Frontend", "AI & ML", "Web Apps"];
