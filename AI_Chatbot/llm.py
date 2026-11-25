@@ -9,7 +9,7 @@ load_dotenv()
 LLM_PROVIDER = os.getenv("LLM_PROVIDER", "ollama").strip().lower()
 
 # Ollama configuration
-MODEL_NAME = os.getenv("OLLAMA_MODEL", "qwen2.5:3b").strip()
+MODEL_NAME = os.getenv("OLLAMA_MODEL", "qwen3:1.7b").strip()
 
 # Gemini configuration
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash").strip()

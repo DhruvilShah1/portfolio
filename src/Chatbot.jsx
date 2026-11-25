@@ -239,7 +239,7 @@ const Chatbot = () => {
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
                     <h3 className="truncate text-[15px] font-semibold tracking-wide">
-                      Portfolio AI
+                      Dhruvil Portfolio Assistant
                     </h3>
                     <Sparkles
                       size={14}
@@ -274,8 +274,9 @@ const Chatbot = () => {
             </div>
 
             <div className="relative mt-4 rounded-xl border border-white/[0.07] bg-black/20 px-3.5 py-3">
-              <p className="text-xs leading-relaxed text-white/65">
-                Explore my work, technical skills, and professional journey.
+              <p className="text-xs leading-relaxed text-red-400/90">
+                {/* Explore my work, technical skills, and professional journey. */}
+                Currently working on RAG implementation.
               </p>
             </div>
           </div>
@@ -352,14 +353,16 @@ const Chatbot = () => {
                 type="text"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                placeholder="Ask me anything..."
-                disabled={isLoading}
-                className="min-w-0 flex-1 bg-transparent px-3 py-2.5 text-[13px] text-white outline-none placeholder:text-white/30 disabled:opacity-50"
+                placeholder="Currently disabled. Please check back later!"
+                // disabled={isLoading}
+                disabled={true}
+                className="min-w-0 flex-1 bg-transparent px-3 py-2.5 text-[13px] text-red-600 outline-none placeholder:text-white/30 disabled:opacity-50"
               />
 
               <button
                 type="submit"
-                disabled={isLoading || !message.trim()}
+                // disabled={isLoading || !message.trim()}
+                disabled={true}
                 aria-label="Send message"
                 className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-lime-300 text-[#171914] transition duration-200 hover:bg-lime-200 hover:shadow-[0_0_18px_rgba(190,242,100,0.16)] disabled:cursor-not-allowed disabled:bg-white/10 disabled:text-white/25 disabled:shadow-none"
               >
