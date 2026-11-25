@@ -3,7 +3,7 @@ import React from "react";
 import Navbar from "./Navbar";
 import Chatbot from "./Chatbot";
 import { Outlet } from "react-router-dom";
-import Footer from "./footer";
+import Footer from "./Footer";
 
 const Layout = () => {
   return (
