@@ -7,7 +7,7 @@ import Footer from "./Footer";
 
 const Layout = () => {
   return (
-    <div className="min-h-screen bg-[#f7f6ec]">
+    <div className="min-h-screen overflow-x-hidden bg-[#f7f6ec]">
       <Navbar />
 
       <main>
@@ -17,7 +17,7 @@ const Layout = () => {
       {/* Floating Chatbot */}
       <Chatbot />
 
-<div >
+<div   >
         <Footer />
 
 </div>

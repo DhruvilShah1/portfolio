@@ -395,11 +395,6 @@ export default function Services() {
           </GlassCard>
         </section>
 
-        {/* Footer */}
-        <footer className="mt-12 flex flex-col justify-between gap-3 border-t border-gray-200/70 pt-6 text-xs text-gray-500 sm:flex-row sm:items-center">
-          <p>© {new Date().getFullYear()} Dhruvil Shah</p>
-          <p>Designed with care. Built with code.</p>
-        </footer>
       </div>
     </main>
   );

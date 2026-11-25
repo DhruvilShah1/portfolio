@@ -1,7 +1,7 @@
 
 import React from "react";
 import { ArrowUpRight, Sparkles, Code2, MapPin } from "lucide-react";
-import photo from "./assets/photo.jpg";
+import photo from "./assets/photo.jpeg";
 
 export const AboutMe = () => {
   return (
@@ -55,9 +55,9 @@ export const AboutMe = () => {
             </div>
 
             {/* Floating Badge */}
-            <div className="absolute -right-3 top-8 flex h-25 w-25 rotate-12 flex-col items-center justify-center rounded-full bg-yellow-400 text-center shadow-lg sm:-right-6 sm:h-24 sm:w-24">
-              <Code2 size={23} />
-              <span className="mt-1 text-sm font-bold">BUILD & CREATE</span>
+            <div className="absolute -right-2 top-6 flex h-20 w-20 rotate-12 flex-col items-center justify-center rounded-full bg-yellow-400 text-center shadow-lg sm:-right-6 sm:top-8 sm:h-24 sm:w-24">
+              <Code2 size={20} className="sm:h-[23px] sm:w-[23px]" />
+              <span className="mt-1 text-[11px] font-bold leading-tight sm:text-sm">BUILD &amp; CREATE</span>
             </div>
           </div>
 

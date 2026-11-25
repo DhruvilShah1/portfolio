@@ -98,13 +98,12 @@ const education = [
     result: "CGPA: 7.83",
   },
   {
-    degree : "S.B Vakil English Mediem School" , 
+    degree: "Higher Secondary Education",
+    field: "Science Stream",
+    institution: "S.B. Vakil English Medium School",
     period: "Jun 2008 – May 2021",
-        result: "Percentage: 66 %",
-
-
-
-  }
+    result: "Percentage: 66%",
+  },
 ];
 
 function GlassCard({ children, className = "" }) {
@@ -468,26 +467,30 @@ export default function Experience() {
             description="My academic foundation in information technology and software development."
           />
 
-          <div className="max-w-5xl flex gap-2">
+          <div className="grid max-w-5xl gap-4 sm:gap-6 md:grid-cols-2">
             {education.map((item) => (
-              <GlassCard key={item.institution} className="p-6 sm:p-8">
-                <div className="flex items-start gap-4">
+              <GlassCard key={`${item.degree}-${item.period}`} className="h-full p-6 sm:p-8">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-yellow-400/60 text-yellow-700">
                     <GraduationCap size={25} />
                   </div>
 
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-950">
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-lg font-bold text-gray-950 sm:text-xl">
                       {item.degree}
                     </h3>
 
-                    <p className="mt-1 font-medium text-gray-700">
-                      {item.field}
-                    </p>
+                    {item.field && (
+                      <p className="mt-1 font-medium text-gray-700">
+                        {item.field}
+                      </p>
+                    )}
 
-                    <p className="mt-3 text-sm leading-6 text-gray-600">
-                      {item.institution}
-                    </p>
+                    {item.institution && (
+                      <p className="mt-3 text-sm leading-6 text-gray-600">
+                        {item.institution}
+                      </p>
+                    )}
 
                     <div className="mt-4 flex flex-wrap gap-3 text-xs text-gray-500">
                       <span className="inline-flex items-center gap-2">
