@@ -1,5 +1,103 @@
 @import "tailwindcss";
 
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #f7f6ec;
+  color: #111827;
+  transition: background-color 250ms ease, color 250ms ease;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+html[data-theme="dark"] body,
+html[data-theme="dark"] .site-shell {
+  background-color: #0c0e0f !important;
+  color: #f3f4f6;
+}
+
+html[data-theme="dark"] .theme-section {
+  background-color: #0c0e0f !important;
+  color: #f3f4f6;
+}
+
+html[data-theme="dark"] [class~="text-gray-950"],
+html[data-theme="dark"] [class~="text-gray-900"],
+html[data-theme="dark"] [class~="text-gray-800"] {
+  color: #f3f4f6 !important;
+}
+
+html[data-theme="dark"] [class~="text-gray-700"] {
+  color: #d1d5db !important;
+}
+
+html[data-theme="dark"] [class~="text-gray-600"] {
+  color: #cbd5e1 !important;
+}
+
+html[data-theme="dark"] [class~="text-gray-500"],
+html[data-theme="dark"] [class~="text-gray-400"] {
+  color: #9ca3af !important;
+}
+
+html[data-theme="dark"] [class~="bg-white/25"],
+html[data-theme="dark"] [class~="bg-white/30"],
+html[data-theme="dark"] [class~="bg-white/35"],
+html[data-theme="dark"] [class~="bg-white/40"],
+html[data-theme="dark"] [class~="bg-white/45"],
+html[data-theme="dark"] [class~="bg-white/50"],
+html[data-theme="dark"] [class~="bg-white"] {
+  background-color: #171a1c !important;
+}
+
+html[data-theme="dark"] [class~="bg-white"].text-black {
+  background-color: #facc15 !important;
+}
+
+html[data-theme="dark"] [class~="bg-black"] {
+  background-color: #111416 !important;
+}
+
+html[data-theme="dark"] [class~="border-black/10"],
+html[data-theme="dark"] [class~="border-black/15"],
+html[data-theme="dark"] [class~="border-black/20"],
+html[data-theme="dark"] [class~="border-gray-100"],
+html[data-theme="dark"] [class~="border-gray-200"],
+html[data-theme="dark"] [class~="border-gray-300"],
+html[data-theme="dark"] [class~="border-white/50"],
+html[data-theme="dark"] [class~="border-white/60"],
+html[data-theme="dark"] [class~="border-white/70"],
+html[data-theme="dark"] [class~="border-white/80"] {
+  border-color: rgb(255 255 255 / 12%) !important;
+}
+
+html[data-theme="dark"] .theme-cta {
+  background-color: #171a1c;
+  color: #f3f4f6;
+}
+
+html[data-theme="dark"] .hire-widget {
+  border-color: rgb(255 255 255 / 20%);
+  background-color: #171a1c;
+}
+
+html[data-theme="dark"] .hire-widget > div {
+  background-color: #facc15;
+  color: #111827;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body {
+    transition: none;
+  }
+}
 
 @keyframes marquee {
   from {

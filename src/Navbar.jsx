@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   NavLink,
   Link,
@@ -14,9 +14,17 @@ import {
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(
+    () => localStorage.getItem("portfolio-theme") === "dark"
+  );
 
   const location = useLocation();
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = darkMode ? "dark" : "light";
+    document.documentElement.style.colorScheme = darkMode ? "dark" : "light";
+    localStorage.setItem("portfolio-theme", darkMode ? "dark" : "light");
+  }, [darkMode]);
 
   const navLinks = [
     { name: "Home", href: "/", isRoute: true },
@@ -42,7 +50,9 @@ const Navbar = () => {
     ${
       active
         ? "text-yellow-400"
-        : "text-gray-300 hover:text-yellow-400"
+        : darkMode
+          ? "text-gray-300 hover:text-yellow-400"
+          : "text-gray-700 hover:text-yellow-600"
     }
     after:absolute after:bottom-0 after:left-1/2
     after:h-[2px] after:-translate-x-1/2
@@ -60,7 +70,11 @@ const Navbar = () => {
       <div className="mx-auto max-w-5xl">
 
         {/* Main Navbar */}
-        <div className="flex items-center justify-between gap-4 rounded-full border border-gray-700 bg-black px-5 py-3 text-white shadow-lg">
+        <div className={`flex items-center justify-between gap-4 rounded-full border px-5 py-3 shadow-lg backdrop-blur-xl ${
+          darkMode
+            ? "border-gray-700 bg-black text-white"
+            : "border-gray-200 bg-white/90 text-gray-900"
+        }`}>
 
           {/* Logo */}
           <Link
@@ -101,9 +115,11 @@ const Navbar = () => {
             {/* Theme Button */}
             <button
               type="button"
-              aria-label="Toggle theme"
+              aria-label={`Switch to ${darkMode ? "light" : "dark"} mode`}
+              aria-pressed={darkMode}
+              title={`Switch to ${darkMode ? "light" : "dark"} mode`}
               onClick={() => setDarkMode((prev) => !prev)}
-              className="hidden h-9 w-9 items-center justify-center rounded-full border border-gray-700 transition hover:border-yellow-400 hover:text-yellow-400 sm:flex"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-current/20 transition hover:border-yellow-400 hover:text-yellow-500"
             >
               {darkMode ? <Sun size={17} /> : <Moon size={17} />}
             </button>
@@ -111,7 +127,9 @@ const Navbar = () => {
             {/* Let's Talk */}
             <a
               href="mailto:your-email@example.com"
-              className="hidden items-center gap-1 rounded-full bg-white px-4 py-2 text-sm font-semibold text-black transition hover:bg-yellow-400 sm:flex"
+              className={`hidden items-center gap-1 rounded-full px-4 py-2 text-sm font-semibold transition hover:bg-yellow-400 sm:flex ${
+                darkMode ? "bg-white text-black" : "bg-black text-white"
+              }`}
             >
               Let's Talk
               <ArrowUpRight size={16} />
@@ -139,7 +157,11 @@ const Navbar = () => {
           }`}
         >
           <div className="overflow-hidden">
-            <div className="space-y-1 rounded-3xl border border-gray-700 bg-black p-3 shadow-xl">
+            <div className={`space-y-1 rounded-3xl border p-3 shadow-xl ${
+              darkMode
+                ? "border-gray-700 bg-black text-white"
+                : "border-gray-200 bg-white text-gray-900"
+            }`}>
               {navLinks.map((link) => {
                 const active = isActive(link);
 
@@ -153,7 +175,9 @@ const Navbar = () => {
                       `flex items-center justify-between rounded-xl px-4 py-3 text-sm transition ${
                         active
                           ? "bg-yellow-400/10 text-yellow-400"
-                          : "text-gray-300 hover:bg-white/10 hover:text-yellow-400"
+                          : darkMode
+                            ? "text-gray-300 hover:bg-white/10 hover:text-yellow-400"
+                            : "text-gray-700 hover:bg-black/5 hover:text-yellow-600"
                       }`
                     }
                   >
@@ -165,6 +189,16 @@ const Navbar = () => {
                   </NavLink>
                 );
               })}
+
+              <button
+                type="button"
+                onClick={() => setDarkMode((prev) => !prev)}
+                aria-pressed={darkMode}
+                className="flex w-full items-center justify-between rounded-xl px-4 py-3 text-sm transition hover:bg-yellow-400/10 hover:text-yellow-500 sm:hidden"
+              >
+                <span>{darkMode ? "Light mode" : "Dark mode"}</span>
+                {darkMode ? <Sun size={17} /> : <Moon size={17} />}
+              </button>
 
               <a
                 href="mailto:your-email@example.com"

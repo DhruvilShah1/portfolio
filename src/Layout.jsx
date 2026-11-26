@@ -21,7 +21,7 @@ useEffect(() => {
 }, []);
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#f7f6ec]">
+    <div className="site-shell min-h-screen overflow-x-hidden bg-[#f7f6ec]">
       <Navbar />
 
       <main>

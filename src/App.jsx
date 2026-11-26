@@ -88,7 +88,7 @@ const App = () => {
     <a
       href="#contact"
       aria-label="Hire me"
-      className="fixed bottom-5 left-4 z-40 sm:bottom-8 sm:left-8 lg:bottom-10 lg:left-10"
+      className="hire-widget fixed bottom-5 left-4 z-40 sm:bottom-8 sm:left-8 lg:bottom-10 lg:left-10"
     >
       <div className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-black/70 bg-[#f7f6ec]/95 shadow-lg backdrop-blur transition-colors duration-300 hover:border-yellow-400 sm:h-20 sm:w-20">
         <div className="flex h-11 w-11 items-center justify-center rounded-full bg-black text-[10px] font-semibold text-white transition-colors duration-300 hover:bg-yellow-400 hover:text-black sm:h-16 sm:w-16 sm:text-sm">
@@ -225,7 +225,7 @@ const App = () => {
 
           <a
             href="mailto:hello@example.com"
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-bold text-black transition-all hover:bg-yellow-400"
+            className="theme-cta mt-6 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-bold text-black transition-all hover:bg-yellow-400"
           >
             Let's work together
             <ArrowUpRight size={17} />

@@ -7,7 +7,7 @@ export const AboutMe = () => {
   return (
     <section
       id="about"
-      className="min-h-screen bg-[#f8f8f5] px-5 py-24 text-black sm:px-10 lg:px-20"
+      className="theme-section min-h-screen bg-[#f8f8f5] px-5 py-24 text-black sm:px-10 lg:px-20"
     >
       <div className="mx-auto max-w-7xl">
         {/* Section Heading */}

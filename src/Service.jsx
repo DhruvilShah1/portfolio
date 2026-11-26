@@ -52,7 +52,7 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="min-h-screen bg-[#f8f8f5] text-black px-5 py-24 sm:px-10 lg:px-20"
+      className="theme-section min-h-screen bg-[#f8f8f5] text-black px-5 py-24 sm:px-10 lg:px-20"
     >
       <div className="mx-auto max-w-7xl">
         {/* Heading */}
