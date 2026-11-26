@@ -8,6 +8,7 @@ import Services from './Services'
 import Contact from './Contact'
 import VideoMonitor from './VideoMonitor'
 import AISettings from './AISettings'
+import Certifications from './Certifications'
 
 const Router = () => {
   return (
@@ -19,6 +20,7 @@ const Router = () => {
                   <Route path="/services" element={<Services />} />
                 <Route path="/portfolio" element={<Project />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/certifications" element={<Certifications />} />
 
 
 
