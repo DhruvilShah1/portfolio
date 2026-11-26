@@ -7,6 +7,7 @@ import Experience from './Experience'
 import Services from './Services'
 import Contact from './Contact'
 import VideoMonitor from './VideoMonitor'
+import AISettings from './AISettings'
 
 const Router = () => {
   return (
@@ -23,7 +24,7 @@ const Router = () => {
 
                   </Route>
 
-                  <Route path="/video" element={<VideoMonitor interviewId="INTERVIEW_123" />} />
+                  {/* <Route path="/settings" element={<AISettings />} /> */}
 
 </Routes>
   )

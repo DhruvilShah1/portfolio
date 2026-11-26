@@ -1,168 +1,104 @@
 
 import os
+import time
 
 from dotenv import load_dotenv
+from google import genai
+from google.genai import types
 
 load_dotenv()
 
-# LLM provider: "ollama" or "gemini"
-LLM_PROVIDER = os.getenv("LLM_PROVIDER", "ollama").strip().lower()
+MODEL_NAME = os.getenv(
+    "GEMINI_MODEL",
+    "gemini-3.5-flash-lite"
+)
 
-# Ollama configuration
-MODEL_NAME = os.getenv("OLLAMA_MODEL", "qwen3:1.7b").strip()
-
-# Gemini configuration
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash").strip()
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "").strip()
+client = genai.Client(
+    api_key=os.getenv("GEMINI_API_KEY")
+)
 
 
-def _build_prompt(query, retrieved_documents):
-    context = ""
+def stream_answer(question, final_documents, on_usage=None):
+    """
+    Streams Gemini output.
 
-    for number, document in enumerate(retrieved_documents, start=1):
-        metadata = document.get("metadata", {})
+    on_usage is an optional callback that receives
+    actual token usage metadata when available.
+    """
 
-        context += f"""
-Source {number}:
-Page: {metadata.get("page", "Unknown")}
-Type: {metadata.get("type", "Unknown")}
+    context = "\n\n".join(
+        str(doc["content"])
+        for doc in final_documents
+    )
 
-Content:
-{document.get("content", "")}
+    prompt = f"""
+You are an AI assistant for a personal portfolio.
 
-"""
+Answer questions using the provided context.
+If the context does not contain the answer,
+say that you don't have enough information.
 
-    return f"""
-You are a helpful AI assistant.
-
-Answer the user's question using ONLY the information
-provided in the PDF context below.
-
-Rules:
-1. Do not make up information.
-2. If the answer is not available in the context,
-   clearly say that you could not find it in the PDF.
-3. Give clear and concise answers.
-4. When possible, mention the source page number.
-5. Use the table information when it is relevant.
-
-PDF CONTEXT:
+CONTEXT:
 {context}
 
-USER QUESTION:
-{query}
+QUESTION:
+{question}
 
 ANSWER:
 """
 
+    llm_start = time.perf_counter()
 
-def _generate_with_ollama(prompt):
-    import ollama
+    input_tokens = 0
+    output_tokens = 0
+    usage_received = False
 
-    response = ollama.chat(
+    stream = client.models.generate_content_stream(
         model=MODEL_NAME,
-        messages=[
-            {
-                "role": "user",
-                "content": prompt,
-            }
-        ],
-        stream=False,
-    )
-
-    return response["message"]["content"]
-
-
-def _generate_with_gemini(prompt):
-    if not GEMINI_API_KEY:
-        raise ValueError(
-            "GEMINI_API_KEY is not set. Add it to .env or the environment."
-        )
-
-    from google import genai
-
-    client = genai.Client(api_key=GEMINI_API_KEY)
-    response = client.models.generate_content(
-        model=GEMINI_MODEL,
         contents=prompt,
-    )
-
-    answer = getattr(response, "text", None)
-    if not answer:
-        raise ValueError("Gemini returned an empty response.")
-
-    return answer
-
-
-def generate_answer(query, retrieved_documents, provider=None):
-    if not retrieved_documents:
-        return "I could not find relevant information in the PDF."
-
-    prompt = _build_prompt(query, retrieved_documents)
-    selected_provider = (provider or LLM_PROVIDER).strip().lower()
-
-    if selected_provider == "gemini":
-        return _generate_with_gemini(prompt)
-
-    if selected_provider == "ollama":
-        return _generate_with_ollama(prompt)
-
-    raise ValueError(
-        f"Unsupported LLM provider '{selected_provider}'. Use 'ollama' or 'gemini'."
-    )
-
-
-def _stream_with_ollama(prompt):
-    import ollama
-
-    stream = ollama.chat(
-        model=MODEL_NAME,
-        messages=[{"role": "user", "content": prompt}],
-        stream=True,
+        config=types.GenerateContentConfig(
+            temperature=0.3
+        )
     )
 
     for chunk in stream:
-        token = chunk.get("message", {}).get("content", "")
-        if token:
-            yield token
 
+        # Capture usage metadata when the provider
+        # exposes it in a streaming response.
+        usage = getattr(chunk, "usage_metadata", None)
 
-def _stream_with_gemini(prompt):
-    if not GEMINI_API_KEY:
-        raise ValueError(
-            "GEMINI_API_KEY is not set. Add it to .env or the environment."
-        )
+        if usage is not None:
 
-    from google import genai
+            input_tokens = (
+                getattr(usage, "prompt_token_count", 0)
+                or 0
+            )
 
-    client = genai.Client(api_key=GEMINI_API_KEY)
-    response = client.models.generate_content_stream(
-        model=GEMINI_MODEL,
-        contents=prompt,
-    )
+            output_tokens = (
+                getattr(usage, "candidates_token_count", 0)
+                or 0
+            )
 
-    for chunk in response:
+            usage_received = True
+
         token = getattr(chunk, "text", None)
+
         if token:
             yield token
 
+    llm_ms = (
+        time.perf_counter() - llm_start
+    ) * 1000
 
-def stream_answer(query, retrieved_documents, provider=None):
-    if not retrieved_documents:
-        yield "I could not find relevant information in the PDF."
-        return
+    # Report usage after streaming has completed.
+    if on_usage:
 
-    prompt = _build_prompt(query, retrieved_documents)
-    selected_provider = (provider or LLM_PROVIDER).strip().lower()
-
-    if selected_provider == "gemini":
-        yield from _stream_with_gemini(prompt)
-        return
-
-    if selected_provider == "ollama":
-        yield from _stream_with_ollama(prompt)
-        return
-
-    raise ValueError(
-        f"Unsupported LLM provider '{selected_provider}'. Use 'ollama' or 'gemini'."
-    )
+        on_usage({
+            "input_tokens": input_tokens,
+            "output_tokens": output_tokens,
+            "total_tokens": (
+                input_tokens + output_tokens
+            ),
+            "llm_ms": llm_ms,
+            "usage_received": usage_received
+        })
